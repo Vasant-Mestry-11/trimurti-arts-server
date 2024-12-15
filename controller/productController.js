@@ -14,8 +14,6 @@ export const createProductController = async (req, res) => {
     switch (true) {
       case !name:
         return res.status(500).send({ success: false, error: "Name is required" });
-      case !slug:
-        return res.status(500).send({ success: false, error: "Slug is required" });
       case !description:
         return res.status(500).send({ success: false, error: "Description is required" });
       case !price:
@@ -161,8 +159,6 @@ export const updateProductController = async (req, res) => {
     switch (true) {
       case !name:
         return res.status(500).send({ success: false, error: "Name is required" });
-      case !slug:
-        return res.status(500).send({ success: false, error: "Slug is required" });
       case !description:
         return res.status(500).send({ success: false, error: "Description is required" });
       case !price:
