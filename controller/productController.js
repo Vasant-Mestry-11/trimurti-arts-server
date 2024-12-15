@@ -54,3 +54,36 @@ export const createProductController = async (req, res) => {
     })
   }
 }
+
+
+export const getProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) return res.status(500).send({
+      success: false,
+      message: "Product id is required"
+    })
+
+    const product = await Product.findById(id);
+
+    if (!product) return res.status(500).send({
+      success: false,
+      message: "Product doesn't exists"
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Product fetched successfully",
+      product
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      error,
+      message: "Failed to fetch product"
+    })
+  }
+}
