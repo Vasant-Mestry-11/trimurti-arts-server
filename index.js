@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 // API
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/category', categoryRoute);
-// app.use('/api/v1/product', productRoute);
+app.use('/api/v1/product', productRoute);
 
 const PORT = process.env.PORT || 8000;
 

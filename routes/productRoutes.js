@@ -3,7 +3,7 @@ import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 import { createProductController } from '../controller/productController.js';
 import formidable from 'express-formidable';
 
-const router = express.Router
+const router = express.Router();
 
 
 // create product
