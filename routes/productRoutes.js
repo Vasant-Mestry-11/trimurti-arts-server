@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/create-product", requireSignIn, isAdmin, formidable(), createProductController);
 
 // get product
-router.get("/get-product/:id", getProductController);
+router.get("/get-product/:slug", getProductController);
 
 // get all products
 router.get('/all-products', getAllProductsController);

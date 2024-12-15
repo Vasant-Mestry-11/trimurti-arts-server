@@ -58,14 +58,16 @@ export const createProductController = async (req, res) => {
 
 export const getProductController = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { slug } = req.params;
 
-    if (!id) return res.status(500).send({
+    if (!slug) return res.status(500).send({
       success: false,
-      message: "Product id is required"
+      message: "Product slug is required"
     })
 
-    const product = await Product.findById(id);
+    const product = await Product.findOne({
+      slug
+    }).select('-photo').populate('category');
 
     if (!product) return res.status(500).send({
       success: false,
@@ -90,7 +92,7 @@ export const getProductController = async (req, res) => {
 
 export const getAllProductsController = async (req, res) => {
   try {
-    const products = await Product.find({}).select('-photo').limit(12).sort({ createdAt: -1 })
+    const products = await Product.find({}).populate('category').select('-photo').limit(12).sort({ createdAt: -1 })
     return res.status(200).send({
       success: true,
       total: products.length,
