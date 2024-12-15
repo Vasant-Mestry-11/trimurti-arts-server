@@ -111,9 +111,9 @@ export const getAllProductsController = async (req, res) => {
 
 export const getProductPhotoController = async (req, res) => {
   try {
-    const { pid } = req.params;
+    const { photoId } = req.params;
 
-    const product = await Product.findById(pid).select("photo");
+    const product = await Product.findById(photoId).select("photo");
 
     if (product.photo.data) {
       res.set("Content-type", product.photo.contentType);
@@ -126,6 +126,25 @@ export const getProductPhotoController = async (req, res) => {
       success: false,
       error,
       message: "Failed to fetch product photo"
+    })
+  }
+}
+
+export const deleteProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Product.findByIdAndDelete(id);
+    return res.status(200).send({
+      success: true,
+      message: "Product deleted successfully"
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      error,
+      message: "Failed to delete product"
     })
   }
 }
