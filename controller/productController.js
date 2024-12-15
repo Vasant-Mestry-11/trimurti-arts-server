@@ -108,3 +108,24 @@ export const getAllProductsController = async (req, res) => {
     })
   }
 }
+
+export const getProductPhotoController = async (req, res) => {
+  try {
+    const { pid } = req.params;
+
+    const product = await Product.findById(pid).select("photo");
+
+    if (product.photo.data) {
+      res.set("Content-type", product.photo.contentType);
+      return res.status(200).send(product.photo.data)
+    }
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      error,
+      message: "Failed to fetch product photo"
+    })
+  }
+}
