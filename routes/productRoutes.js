@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
-import { createProductController, getProductController } from '../controller/productController.js';
+import { createProductController, getProductController, getAllProductsController } from '../controller/productController.js';
 import formidable from 'express-formidable';
 
 const router = express.Router();
@@ -11,5 +11,8 @@ router.post("/create-product", requireSignIn, isAdmin, formidable(), createProdu
 
 // get product
 router.get("/get-product/:id", getProductController);
+
+// get all products
+router.get('/all-products', getAllProductsController);
 
 export default router

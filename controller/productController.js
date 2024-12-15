@@ -87,3 +87,22 @@ export const getProductController = async (req, res) => {
     })
   }
 }
+
+export const getAllProductsController = async (req, res) => {
+  try {
+    const products = await Product.find({}).select('-photo').limit(12).sort({ createdAt: -1 })
+    return res.status(200).send({
+      success: true,
+      total: products.length,
+      products,
+      message: "Products fetched successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      error,
+      message: "Failed to fetch products"
+    })
+  }
+}
