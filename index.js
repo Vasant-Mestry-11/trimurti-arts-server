@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => {
   console.log("====", process.env.mode)
 
-  res.status(200).send("Hello from server")
+  res.status(200).send(`${process.env.mode}`)
 })
 
 
