@@ -23,11 +23,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  console.log("====", process.env.mode)
-
-  res.status(200).send(process.env.NODE_ENV)
+  res.status(200).send("Hello from server")
 })
-
 
 // API
 app.use('/api/v1/auth', authRoutes);
