@@ -32,6 +32,8 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/category', categoryRoute);
 app.use('/api/v1/product', productRoute);
 
+console.log(process.env.mode)
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
