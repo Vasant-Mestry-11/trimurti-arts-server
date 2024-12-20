@@ -200,3 +200,27 @@ export const updateProductController = async (req, res) => {
     })
   }
 }
+
+export const filterProductsController = async (req, res) => {
+  try {
+    const { checkedCategory, checkedPrice } = req.body;
+    let args = {};
+    if (checkedCategory.length > 0) args.category = checkedCategory;
+    if (checkedPrice.length) args.price = {
+      $lte: checkedPrice[1], $gte: checkedPrice[0],
+    };
+
+    const products = await Product.find(args);
+    return res.status(200).send({
+      success: true,
+      products,
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      error,
+      message: "Error in filtering products"
+    })
+  }
+}
