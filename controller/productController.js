@@ -290,18 +290,52 @@ export const productsPerPageController = async (req, res) => {
       .select("-photo")
       .skip(page - 1)
       .limit(productsPerPage)
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1 });
     return res.status(200).send({
       success: true,
       products,
-      message: "Products fetched successfully"
-    })
+      message: "Products fetched successfully",
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).send({
       success: false,
       error,
       message: "Failed fetch products by page",
+    });
+  }
+};
+
+export const searchProductController = async (req, res) => {
+  try {
+    const { keywords } = req.params;
+    const products = await Product.find({
+      $or: [
+        {
+          name: {
+            $regex: keywords,
+            $options: "i",
+          },
+          description: {
+            $regex: keywords,
+            $options: "i",
+          },
+        },
+      ],
+    }).select("-photo");
+
+    return res.status(200).send({
+      success: true,
+      total: products.length,
+      products,
+      message: "Searched products fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      error,
+      message: "Failed to search products",
     });
   }
 };
