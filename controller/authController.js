@@ -181,4 +181,4 @@ const updateProfileController = async (req, res) => {
   }
 };
 
-export { registerController, loginController, forgotPasswordController };
+export { registerController, loginController, forgotPasswordController, updateProfileController };
