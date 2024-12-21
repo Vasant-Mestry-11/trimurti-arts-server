@@ -339,3 +339,28 @@ export const searchProductController = async (req, res) => {
     });
   }
 };
+
+export const relatedProductsController = async (req, res) => {
+  try {
+    const { productId, categoryId } = req.params;
+    const products = await Product.find({
+      category: categoryId,
+      _id: {
+        $ne: productId
+      }
+    }).select("-photo").limit(3).populate("category");
+
+    return res.status(200).send({
+      success: true,
+      products,
+      message: "Simlar products fetched successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      error,
+      message: "Failed to fetch related products"
+    })
+  }
+}
