@@ -213,6 +213,7 @@ export const filterProductsController = async (req, res) => {
     const products = await Product.find(args);
     return res.status(200).send({
       success: true,
+      totalCount: products.length,
       products,
     })
   } catch (error) {
