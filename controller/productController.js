@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import Product from "../models/productModel.js";
+import Category from "../models/categoryModel.js"
 import fs from "fs";
 
 export const createProductController = async (req, res) => {
@@ -361,6 +362,27 @@ export const relatedProductsController = async (req, res) => {
       success: false,
       error,
       message: "Failed to fetch related products"
+    })
+  }
+}
+
+export const categoryWiseProductController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const category = await Category.findOne({ slug });
+    const products = await Product.find({ category }).populate('category');
+    return res.status(200).send({
+      success: true,
+      category,
+      products,
+      message: 'Successfully fetched category wise products'
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      error,
+      message: "Failed to fetch category wise products"
     })
   }
 }
