@@ -7,6 +7,7 @@ import {
   getProductController,
   getAllProductsController,
   getProductPhotoController,
+  productCountController,
   updateProductController,
 } from "../controller/productController.js";
 import formidable from "express-formidable";
