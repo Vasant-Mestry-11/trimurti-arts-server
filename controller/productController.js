@@ -36,12 +36,10 @@ export const createProductController = async (req, res) => {
           .status(500)
           .send({ success: false, error: "Shipping address is required" });
       case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({
-            success: false,
-            error: "Photo is required and should be less than 1mb",
-          });
+        return res.status(500).send({
+          success: false,
+          error: "Photo is required and should be less than 1mb",
+        });
     }
 
     const product = new Product({ ...req.fields, slug: slugify(name) });
@@ -200,12 +198,10 @@ export const updateProductController = async (req, res) => {
           .status(500)
           .send({ success: false, error: "Shipping address is required" });
       case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({
-            success: false,
-            error: "Photo is required and should be less than 1mb",
-          });
+        return res.status(500).send({
+          success: false,
+          error: "Photo is required and should be less than 1mb",
+        });
     }
 
     const { productId } = req.params;
@@ -282,6 +278,30 @@ export const productCountController = async (req, res) => {
       success: false,
       error,
       message: "Error in product count",
+    });
+  }
+};
+
+export const productsPerPageController = async (req, res) => {
+  try {
+    const productsPerPage = 3;
+    const page = req.params.page ? req.params.page : 1;
+    const products = await Product.find({})
+      .select("-photo")
+      .skip(page - 1)
+      .limit(productsPerPage)
+      .sort({ createdAt: -1 })
+    return res.status(200).send({
+      success: true,
+      products,
+      message: "Products fetched successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      success: false,
+      error,
+      message: "Failed fetch products by page",
     });
   }
 };
